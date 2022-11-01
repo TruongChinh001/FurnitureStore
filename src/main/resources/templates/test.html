@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<body>
+		<main class="row">
+			<div th:each="a:${list}" class="p-4 col-sm-4">
+				<p>[[${a.fullname}]]</p>
+			</div>
+		</main>
+	</body>
+</html>
