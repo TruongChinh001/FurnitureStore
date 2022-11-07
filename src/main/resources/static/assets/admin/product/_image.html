@@ -1,0 +1,35 @@
+<div class="col-sm-12 form_product">
+    <div class="form-group col-12 d-flex">
+        <div class="col-sm-5 main-image text-center m-auto">
+            <label class="my-3">Hình đại diện</label>
+            <label for="image" class="col-12" ng-if="form.mainImage == null">
+                <img ng-src="/assets/images/default.png" style="max-width: 100%;" height="100%">
+            </label>
+            <label for="image" class="col-12" ng-if="form.mainImage != null">
+                <img ng-src="/assets/images/products/{{form.mainImage}}" style="max-width: 100%;" height="100%">
+            </label>
+            <div class="choose-file">
+                <label for="image" class="filupp">
+                    <span class="filupp-file-name js-value">Chọn hình ảnh</span>
+            </div>
+            <input type="file" class="form-control" id="image">
+            <!-- <input type="file" class="form-control" id="image"
+            onchange="angular.element(this).scope().imageChanged(this.files)" style="visibility:hidden;"> -->
+        </div>
+        <!-- <div class="col-sm-5 main-image text-center m-auto" ng-if="form.image == null">
+            <label class="my-3">Hình đại diện</label>
+            <label for="image" class="col-12" ng-if="form.mainImage == null">
+                <img ng-src="/assets/images/default.png" style="max-width: 100%;" height="100%">
+            </label>
+            <label for="image" class="col-12" ng-if="form.mainImage != null">
+                <img ng-src="/assets/images/products/{{form.mainImage}}" style="max-width: 100%;" height="100%">
+            </label>
+            <div class="choose-file">
+                <label for="image" class="filupp">
+                    <span class="filupp-file-name js-value">Chọn hình ảnh</span>
+            </div>
+            <input type="file" class="form-control" id="image"
+            onchange="angular.element(this).scope().imageChanged(this.files)" style="visibility:hidden;">
+        </div> -->
+    </div>
+</div>

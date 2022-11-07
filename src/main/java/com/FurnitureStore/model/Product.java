@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.Type;
 
@@ -55,7 +58,7 @@ public class Product {
 	@Column(nullable = false)
 	private Integer inventory;
 	
-	@Column(name = "in_stock", nullable = false)
+	@Column(name = "in_stock")
 	private Boolean inStock;
 	
 	@Column(name = "short_desc", length = 512, columnDefinition="TEXT")
@@ -72,6 +75,20 @@ public class Product {
 	@Column(name = "review_count")
 	private Integer reviewCount;
 	
+	@Column
+	private Float length;
+	
+	@Column
+	private Float height;
+	
+	@Column
+	private Float weight;
+	
+	@Transient
+    public Float getRealPrice() {
+        return this.price - (this.price * this.discount / 100);
+    }
+	
 	@ManyToOne()
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
@@ -84,12 +101,19 @@ public class Product {
 	@JoinColumn(name = "unit_product_id")
 	private UnitProduct unitProduct;
 	
+	@ManyToOne()
+	@JoinColumn(name = "material_id")
+	private Material material;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductImage> productImages;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<CartItem> cartItems;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Review> reviews;
 	

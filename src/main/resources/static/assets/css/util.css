@@ -3167,12 +3167,15 @@ iframe {border: none;}
 .wrap-pic-w,
 .wrap-pic-max-w,
 .wrap-pic-h,
-.wrap-pic-max-h {
+.wrap-pic-max-h,
+.wrap-pic-detail{
 	display: block;
 }
 
 .wrap-pic-w img {width: 100%;}
 .wrap-pic-max-w img {max-width: 100%;}
+
+.wrap-pic-detail img{width: 100%; height: 600px;}
 
 .wrap-pic-h img {height: 100%;}
 .wrap-pic-max-h img {max-height: 100%;}

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+	<body>
+		<main th:object="${order}">
+			<div class="es-wrapper-color">
+				<table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<td class="esd-email-paddings" valign="top">
+								<table class="es-content" cellspacing="0" cellpadding="0" align="center">
+									<tbody>
+										<tr>
+											<td class="esd-stripe" esd-custom-block-id="1754" align="center">
+                                                <div class="col-lg-11 col-xl-8 m-lr-auto bg-white">
+                                                    <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="esd-structure es-p10t es-p10b es-p20r es-p20l" esd-general-paddings-checked="false" align="left">
+                                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                                                    <table style="border-radius: 0px; border-collapse: separate;" width="100%" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td class="esd-block-text es-p10t es-p15b" align="center">
+                                                                                                    <h1>Cảm ơn đơn hàng của bạn!<br></h1>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="esd-block-text es-p5t es-p5b es-p40r es-p40l" align="center">
+                                                                                                    <p style="color: #333333;">Bạn sẽ nhận được một email khi các mặt hàng của bạn được chuyển đi. <br>Nếu bạn có bất kỳ câu hỏi nào, hãy gọi cho chúng tôi 1900-1234-5678.</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="esd-block-button es-p15t es-p10b" align="center"><span class="es-button-border" style="border-radius: 5px; background: #d48344 none repeat scroll 0% 0%; border-style: solid; border-color: #2cb543; border-top: 0px solid #2cb543; border-bottom: 0px solid #2cb543;"><a href="https://viewstripo.email/" class="es-button" target="_blank" style="font-size: 16px; border-top-width: 10px; border-bottom-width: 10px; border-radius: 5px; background: #d48344 none repeat scroll 0% 0%; border-color: #d48344;">Xem trạng thái đơn hàng</a></span></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table class="es-content" cellspacing="0" cellpadding="0" align="center">
+									<tbody>
+										<tr>
+											<td class="esd-stripe" esd-custom-block-id="1755" align="center">
+                                                <div class="col-lg-11 col-xl-8 m-lr-auto bg-white">
+                                                    <table class="es-content-body" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="esd-structure es-p20t es-p30b es-p20r es-p20l" align="left">
+                                                                    <!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="280" valign="top"><![endif]-->
+                                                                    <table class="es-left col-6" cellspacing="0" cellpadding="0" align="left">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="es-m-p20b esd-container-frame" width="40%" align="left">
+                                                                                    <div class="col-12">
+                                                                                        <table style="background-color: #fef9ef; border-color: #efefef; border-collapse: separate; border-width: 1px 0px 1px 1px; border-style: solid;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fef9ef">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="esd-block-text es-p20t es-p10b es-p20r es-p20l" align="left">
+                                                                                                        <h4>TÓM TẮT:</h4>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="esd-block-text es-p20b es-p20r es-p20l" align="left">
+                                                                                                        <table style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">Mã đơn hàng #:</span></td>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">[[*{id}]]</span></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">Người mua:</span></td>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">[[*{account.fullname}]]</span></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">Ngày đặt hàng:</span></td>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">[[*{createDate}]]</span></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">Tổng tiền:</span></td>
+                                                                                                                    <td><span style="font-size: 14px; line-height: 150%;">[[${#numbers.formatCurrency(totalPrice)}]]</span></td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                        <p style="line-height: 150%;"><br></p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!--[if mso]></td><td width="0"></td><td width="280" valign="top"><![endif]-->
+                                                                    <table class="es-right col-6" cellspacing="0" cellpadding="0" align="right">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="esd-container-frame" width="40%" align="left">
+                                                                                    <table style="background-color: #fef9ef; border-collapse: separate; border-width: 1px; border-style: solid; border-color: #efefef;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fef9ef">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td class="esd-block-text es-p20t es-p10b es-p20r es-p20l" align="left">
+                                                                                                    <h4>Địa chỉ giao hàng:<br></h4>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="esd-block-text es-p20b es-p20r es-p20l" align="left">
+                                                                                                    [[*{address}]]
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!--[if mso]></td></tr></table><![endif]-->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="es-content" cellspacing="0" cellpadding="0" align="center">
+									<tbody>
+										<tr>
+											<td class="esd-stripe" esd-custom-block-id="1758" align="center">
+												<div class="col-lg-11 col-xl-8 m-lr-auto m-b-50 bg-white">
+                                                    <div class="  m-lr-0-xl">
+                                                        <div class="wrap-table-shopping-cart">
+                                                            <table class="table-shopping-cart">
+                                                                <tr class="table_head">
+                                                                    <th class="">Hình ảnh</th>
+                                                                    <th class="">Tên sản phẩm</th>
+                                                                    <th class="">Số lượng</th>
+                                                                    <th class="">Giá</th>
+                                                                    <th class="">Tổng giá</th>
+                                                                </tr>
+                            
+                                                                <tr class="table_row" th:each="detail : *{orderDetails}" th:object="${detail}">
+                                                                    <td class="">
+                                                                        <div class="how-itemcart1">
+                                                                            <img th:src="@{|/assets/images/*{product.mainImage}|}" alt="IMG">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="">[[*{product.name}]]</td>
+                                                                    <td class="">[[*{quantity}]]</td>
+                                                                    <td class="">[[*{#numbers.formatCurrency(product.price)}]]</td>
+                                                                    <td class="">[[*{#numbers.formatCurrency(price * quantity)}]]</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table cellpadding="0" cellspacing="0" class="es-footer" align="center">
+									<tbody>
+										<tr>
+											<td class="esd-stripe" esd-custom-block-id="1748" align="center">
+												<table class="es-footer-body" width="600" cellspacing="0" cellpadding="0" align="center">
+													<tbody>
+														<tr>
+															<td class="esd-structure es-p20" esd-general-paddings-checked="false" align="left">
+																<!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="178" valign="top"><![endif]-->
+																<table class="es-left" cellspacing="0" cellpadding="0" align="left">
+																	<tbody>
+																		<tr>
+																			<td class="es-m-p0r es-m-p20b esd-container-frame" width="178" valign="top" align="center">
+																				<table width="100%" cellspacing="0" cellpadding="0">
+																					<tbody>
+																						<tr>
+																							<td class="esd-block-image es-m-p0l es-m-txt-c" align="left" style="font-size:0"><a href target="_blank"><img src="https://tlr.stripocdn.email/content/guids/CABINET_5ebd51945adb862745b1a105fbb2c4f4/images/431502878865957.png" alt="Petshop logo" title="Petshop logo" width="108"></a></td>
+																						</tr>
+																						<tr>
+																							<td class="esd-block-text es-p10t es-p5b es-m-txt-c" align="left">
+																								<p>Po Box 3453 Colins St.</p>
+																								<p>Ceduna 4096 Australia</p>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td class="esd-block-text es-p5t es-m-txt-c" align="left">
+																								<p><a target="_blank" href="tel:123456789">123456789</a><br><a target="_blank" href="mailto:your@mail.com">your@mail.com</a></p>
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<!--[if mso]></td><td width="20"></td><td width="362" valign="top"><![endif]-->
+																<table cellspacing="0" cellpadding="0" align="right">
+																	<tbody>
+																		<tr>
+																			<td class="esd-container-frame" width="362" align="left">
+																				<table width="100%" cellspacing="0" cellpadding="0">
+																					<tbody>
+																						<tr>
+																							<td class="esd-block-text es-p15t es-p20b es-m-txt-c" align="left">
+																								<p style="line-height: 150%;"><span style="font-size: 20px; line-height: 150%;">Information</span></p>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td class="esd-block-text es-m-txt-c" align="left">
+																								<p>Vector graphics designed by <a target="_blank" href="http://www.freepik.com/">Freepik</a>.<br></p>
+																								<p>You are receiving this email because you have visited our site or asked us about regular newsletter<br></p>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td align="left" class="esd-block-text es-p10t es-m-txt-c">
+																								<p style="line-height: 150%; font-size: 12px;"><a target="_blank" href style="line-height: 150%; font-size: 12px;" class="unsubscribe">Unsubscribe</a> ♦ <a target="_blank" href="https://viewstripo.email" style="font-size: 12px;">Update Preferences</a> ♦ <a target="_blank" href="https://viewstripo.email" style="font-size: 12px;">Customer Support</a></p>
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<!--[if mso]></td></tr></table><![endif]-->
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="esd-footer-popover es-content" cellspacing="0" cellpadding="0" align="center">
+									<tbody>
+										<tr>
+											<td class="esd-stripe" align="center">
+												<table class="es-content-body" style="background-color: transparent;" width="600" cellspacing="0" cellpadding="0" align="center">
+													<tbody>
+														<tr>
+															<td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
+																<table width="100%" cellspacing="0" cellpadding="0">
+																	<tbody>
+																		<tr>
+																			<td class="esd-container-frame" width="560" valign="top" align="center">
+																				<table width="100%" cellspacing="0" cellpadding="0">
+																					<tbody>
+																						<tr>
+																							<td class="esd-block-image es-infoblock made_with" align="center" style="font-size:0"><a target="_blank" href="https://viewstripo.email/?utm_source=templates&utm_medium=email&utm_campaign=pets&utm_content=trigger_newsletter"><img src="https://tlr.stripocdn.email/content/guids/CABINET_9df86e5b6c53dd0319931e2447ed854b/images/64951510234941531.png" alt width="125"></a></td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</main>
+	</body>
+</html>

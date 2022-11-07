@@ -2,50 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
 
 <head>
-	<title>Home</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--===============================================================================================-->
-	<link rel="icon" type="image/png" src="/assets/images/icons/favicon.png" />
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link href="/assets/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/fonts/iconic/css/material-design-iconic-font.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/fonts/linearicons-v1.0.0/icon-font.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/animate/animate.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/css-hamburgers/hamburgers.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/animsition/css/animsition.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/select2/select2.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/daterangepicker/daterangepicker.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/slick/slick.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/MagnificPopup/magnific-popup.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/vendor/perfect-scrollbar/perfect-scrollbar.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-	<link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-	<link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/animate.css">
-	<link rel="stylesheet" type="text/css" href="/assets/plugins/slick-1.8.0/slick.css">
-	<link rel="stylesheet" href="/assets/css/login.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-	<!--===============================================================================================-->
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" src="/assets/images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="/assets/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.8.0/angular-route.min.js"></script>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/MagnificPopup/magnific-popup.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/slick-1.8.0/slick.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+    <!--===============================================================================================-->
 </head>
 
-<body class="animsition">
+<body class="animsition" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 
     <div th:replace="/layout/_header.html"></div>
 
@@ -57,7 +60,7 @@
 
 
 
-	<!--===============================================================================================-->
+    <!--===============================================================================================-->
     <script src="/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
     <script src="/assets/vendor/animsition/js/animsition.min.js"></script>
@@ -134,7 +137,7 @@
         $('.js-addcart-detail').each(function () {
             var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
             $(this).on('click', function () {
-                swal(nameProduct, "is added to cart !", "success");
+                swal(nameProduct, "Thêm sản phẩm vào giỏ hàng thành công!", "success");
             });
         });
 
@@ -157,16 +160,23 @@
         });
     </script>
     <!--===============================================================================================-->
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/styles/bootstrap4/popper.js"></script>
+    <script src="/assets/styles/bootstrap4/bootstrap.min.js"></script>
     <script src="/assets/plugins/greensock/TweenMax.min.js"></script>
     <script src="/assets/plugins/greensock/TimelineMax.min.js"></script>
     <script src="/assets/plugins/scrollmagic/ScrollMagic.min.js"></script>
     <script src="/assets/plugins/greensock/animation.gsap.min.js"></script>
     <script src="/assets/plugins/greensock/ScrollToPlugin.min.js"></script>
     <script src="/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-    <script src="/assets/plugins/slick-1.8.0/slick.js"></script>
     <script src="/assets/plugins/easing/easing.js"></script>
+    <script src="/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="/assets/plugins/parallax-js-master/parallax.min.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/shopping-cart.js"></script>
 
 </body>
 

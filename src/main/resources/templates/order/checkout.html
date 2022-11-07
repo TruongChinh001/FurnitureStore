@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main>
+        <div class="single-checkout">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="checkout row">
+                        <div class="col-lg-7 p-lr-40">
+                            <div class="item left styled">
+                                <h1>Thông tin vận chuyển</h1>
+                                <form action="">
+                                    <div class="form-group">
+                                        <label for="email">Tên tài khoản <span></span></label>
+                                        <th:block th:if="${#request.remoteUser}">
+                                            <div class="form-control" id="username">[[${#request.remoteUser}]]</div>
+                                        </th:block>
+                                        <th:block th:unless="${#request.remoteUser}">
+                                            <input class="form-control" type="username" name="username" id="username"
+                                                required>
+                                        </th:block>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fullname">Họ và tên
+                                            <span></span>
+                                        </label>
+                                        <input class="form-control" type="fullname" name="fullname" id="fullname" required>
+                                        <!--<div class="form-control">[[${#request.remoteUser}]]</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email <span></span></label>
+                                        <input class="form-control" type="email" name="email" id="email" required>
+                                        <!--<input class="form-control" type="email" name="email" id="email" autocomplete="off" required>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại <span></span></label>
+                                        <input class="form-control" type="phone" name="phone" id="phone" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address_line_1">Số nhà, Đường <span></span></label>
+                                        <input class="form-control" ng-model="order.addressLine1" type="address_line_1"
+                                            name="address_line_1" id="address_line_1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="province_city">Thành phố / Tỉnh <span></span></label>
+                                        <input class="form-control" ng-model="order.provinceCity" type="province_city"
+                                            name="province_city" id="province_city" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="district">Quận / Huyện <span></span></label>
+                                        <input class="form-control" ng-model="order.district" type="district"
+                                            name="district" id="district" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ward_village">Phường / Xã <span></span></label>
+                                        <input class="form-control" ng-model="order.wardVillage" type="ward_village"
+                                            name="ward_village" id="ward_village" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hamlet">Ấp <span></span></label>
+                                        <input class="form-control" ng-model="order.hamlet" type="hamlet" name="hamlet"
+                                            id="hamlet" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ghi chú (Không bắt buộc)</label>
+                                        <textarea class="form-control" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="checkset d-flex">
+                                        <input type="checkbox" id="an_account">
+                                        <label for="an_account">Đăng ký tài khoản?</label>
+                                    </div>
+                                </form>
+
+                                <div class="shipping-method">
+                                    <h2>Phương thức vận chuyển</h2>
+                                    <p class="checkset d-flex">
+                                        <input type="radio" checked>
+                                        <label>30000đ tỉ lệ cố định</label>
+                                    </p>
+                                </div>
+
+                                <div class="primary-checkout">
+                                    <button ng-click="order.purchase()" class="btn-checkout">Đặt hàng</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-5 p-lr-40">
+                            <div class="item right">
+                                <h2>Đơn hàng</h2>
+                                <div class="summary-order is_sticky">
+                                    <div class="summary-totals">
+                                        <ul>
+                                            <li>
+                                                <span>Tổng phụ</span>
+                                                <span>30000 vnđ</span>
+                                            </li>
+                                            <li>
+                                                <span>Giảm giá</span>
+                                                <span>10%</span>
+                                            </li>
+                                            <li>
+                                                <span>Vận chuyển</span>
+                                                <span>150000</span>
+                                            </li>
+                                            <li>
+                                                <span>Tổng</span>
+                                                <strong>{{cartfurniture.amount | number}} đ</strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <ul class="products mini">
+                                        <li ng-repeat="item in cartfurniture.items" class="item">
+                                            <div class="thumbnails object-cover">
+                                                <img ng-src="/assets/images/{{item.mainImage}}" alt="">
+                                            </div>
+                                            <div class="item-content">
+                                                <a class="name-checkout" href="#">{{item.name}}</a>
+                                                <span class="price">
+                                                    <span>{{item.price | number}} </span>
+                                                    <span class="qty-checkout"> x {{item.quantity}}</span>
+                                                </span>
+                                                <span class="amount">
+                                                    <span><strong>{{item.quantity * item.price | number}} đ</strong></span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
