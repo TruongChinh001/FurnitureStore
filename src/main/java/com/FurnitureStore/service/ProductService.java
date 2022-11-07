@@ -22,4 +22,10 @@ public interface ProductService {
 
 	List<Product> getFeaturedProduct();
 
+	List<Product> getProductsInCategoryGroup(int i);
+
+	Integer getCountProductsByBrand(Integer integer);
+
+	List<Product> findByBrand(Integer integer);
+
 }

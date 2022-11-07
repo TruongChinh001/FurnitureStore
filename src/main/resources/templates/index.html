@@ -97,14 +97,14 @@
 								</ul>
 							</li>
 
-							<li><a th:href="@{/about}">Giới thiệu</a></li>
-
 							<li><a href="blog.html">Blog</a></li>
+
+							<li><a th:href="@{/about}">Giới thiệu</a></li>
 
 							<li><a th:href="@{/contact}">Liên hệ</a></li>
 
 							<th:block th:if="${#request.remoteUser}">
-								<li><a href="#" class="text-dark fw-bold">Đơn hàng</a></li>
+								<li><a th:href="@{/your-orders}" class="text-dark fw-bold">Đơn hàng</a></li>
 							</th:block>
 						</ul>
 					</div>
@@ -223,7 +223,13 @@
 
 				<li><a th:href="@{/products}">Sản phẩm</a></li>
 
-				<li><a th:href="@{/}" class="label1 rs1" data-label1="hot">Phòng</a></li>
+				<li><a th:href="@{/}" class="label1 rs1" data-label1="hot">Phòng</a>
+					<ul class="sub-menu">
+						<ul class="sub-menu">
+							<li ng-repeat="cg in listCategoriesGroup"><a th:href="@{/products}">{{cg.name}}</a></li>
+						</ul>
+					</ul>
+				</li>
 
 				<li><a href="blog.html">Blog</a></li>
 
@@ -272,7 +278,7 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								{{item.name}} </a> <span class="header-cart-item-info"> 1
+								{{item.name}} </a> <span class="header-cart-item-info">
 								{{item.quantity}} x {{item.price | number}} đ </span>
 						</div>
 					</li>
@@ -376,10 +382,10 @@
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1">Tất cả sản
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 all">Tất cả sản
 						phẩm</button>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">Phòng
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".living-room">Phòng
 						khách</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">Phòng làm
@@ -530,12 +536,11 @@
 			</div>
 
 			<div class="row isotope-grid">
-				<div th:each="newProducts:${newProducts}"
-					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women new_products-item">
-					<!-- Block2 -->
+				<div th:each="living:${livingRooms}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item new_products-item living-room">
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							<img th:src="@{|/assets/images/${newProducts.mainImage}|}" alt="IMG-PRODUCT">
+							<img th:src="@{|/assets/images/${living.mainImage}|}" alt="IMG-PRODUCT">
 
 							<a href="#"
 								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
@@ -544,10 +549,134 @@
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a th:href="@{|/product/detail/${newProducts.id}|}"
+								<a th:href="@{|/product/detail/${living.id}|}"
 									class="stext-118 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									[[${newProducts.name}]] </a> <span class="stext-105 cl3">
-									<strong>[[${#numbers.formatCurrency(newProducts.price)}]]</strong>
+									[[${living.name}]] </a> <span class="stext-105 cl3">
+									<strong>[[${#numbers.formatCurrency(living.realPrice)}]]</strong>
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04"
+										src="/assets/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l"
+										src="/assets/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:each="work:${workRooms}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item new_products-item living-room">
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="@{|/assets/images/${work.mainImage}|}" alt="IMG-PRODUCT">
+
+							<a href="#"
+								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								Xem chi tiết </a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a th:href="@{|/product/detail/${work.id}|}"
+									class="stext-118 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									[[${work.name}]] </a> <span class="stext-105 cl3">
+									<strong>[[${#numbers.formatCurrency(work.realPrice)}]]</strong>
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04"
+										src="/assets/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l"
+										src="/assets/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:each="bed:${bedRooms}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item new_products-item living-room">
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="@{|/assets/images/${bed.mainImage}|}" alt="IMG-PRODUCT">
+
+							<a href="#"
+								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								Xem chi tiết </a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a th:href="@{|/product/detail/${livbeding.id}|}"
+									class="stext-118 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									[[${bed.name}]] </a> <span class="stext-105 cl3">
+									<strong>[[${#numbers.formatCurrency(bed.realPrice)}]]</strong>
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04"
+										src="/assets/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l"
+										src="/assets/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:each="dining:${diningRooms}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item new_products-item living-room">
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="@{|/assets/images/${dining.mainImage}|}" alt="IMG-PRODUCT">
+
+							<a href="#"
+								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								Xem chi tiết </a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a th:href="@{|/product/detail/${dining.id}|}"
+									class="stext-118 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									[[${dining.name}]] </a> <span class="stext-105 cl3">
+									<strong>[[${#numbers.formatCurrency(dining.realPrice)}]]</strong>
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04"
+										src="/assets/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l"
+										src="/assets/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:each="decor:${decorated}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item new_products-item living-room">
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="@{|/assets/images/${decor.mainImage}|}" alt="IMG-PRODUCT">
+
+							<a href="#"
+								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								Xem chi tiết </a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a th:href="@{|/product/detail/${decor.id}|}"
+									class="stext-118 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									[[${decor.name}]] </a> <span class="stext-105 cl3">
+									<strong>[[${#numbers.formatCurrency(decor.realPrice)}]]</strong>
 								</span>
 							</div>
 
@@ -582,7 +711,7 @@
 					<div class="product-item">
 						<div class="product-title">
 							<div class="product-title_text">
-								<a href="#">[[${featuredProducts.name}]]</a>
+								<a th:href="@{|/product/detail/${featuredProducts.id}|}">[[${featuredProducts.name}]]</a>
 							</div>
 							<div class="ratting">
 								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -599,7 +728,7 @@
 							</div>
 						</div>
 						<div class="product-price">
-							<p>[[${#numbers.formatCurrency(featuredProducts.price)}]]</p>
+							<p>[[${#numbers.formatCurrency(featuredProducts.realPrice)}]]</p>
 							<a class="btn" href=""><i class="fa fa-shopping-cart"></i><span>Chọn mua</span></a>
 						</div>
 					</div>

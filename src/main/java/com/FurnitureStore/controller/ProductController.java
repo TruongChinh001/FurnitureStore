@@ -3,9 +3,11 @@ package com.FurnitureStore.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.FurnitureStore.model.Brand;
 import com.FurnitureStore.model.Category;
 import com.FurnitureStore.model.CategoryGroup;
 import com.FurnitureStore.model.Product;
+import com.FurnitureStore.service.BrandService;
 import com.FurnitureStore.service.CategoryGroupService;
 import com.FurnitureStore.service.CategoryService;
 import com.FurnitureStore.service.ProductService;
@@ -28,10 +30,13 @@ public class ProductController {
 	private CategoryService categoryService;
 	
 	@Autowired
+	private BrandService brandService;
+	
+	@Autowired
 	private CategoryGroupService categoryGroupService;
 
 	@GetMapping("products")
-	public String products(Model model, @RequestParam("cgid") Optional<Integer> cgid,@RequestParam("cid") Optional<Integer> cid) {
+	public String products(Model model, @RequestParam("bid") Optional<Integer> bid,@RequestParam("cid") Optional<Integer> cid) {
 		
 		List<CategoryGroup> categoryGroups = categoryGroupService.findAll();
 		model.addAttribute("categoryGroups", categoryGroups);
@@ -39,12 +44,22 @@ public class ProductController {
 		List<Category> categories = categoryService.findAll();
 		model.addAttribute("categories", categories);
 		
+		List<Brand> brands = brandService.findAll();
+		model.addAttribute("brands", brands);
+		
 		if(cid.isPresent()) {
 			Integer countProducts = productService.getCountProductsByCategory(cid.get());
 			model.addAttribute("countProducts", countProducts);
 			List<Product> list = productService.findByCategory(cid.get());
 			model.addAttribute("products", list);
-		} else {
+		} else if(bid.isPresent()) {
+			Integer countProducts = productService.getCountProductsByBrand(bid.get());
+			model.addAttribute("countProducts", countProducts);
+			List<Product> list = productService.findByBrand(bid.get());
+			model.addAttribute("products", list);
+		}
+		
+		else {
 			Integer countProducts = productService.getCountProducts();
 			model.addAttribute("countProducts", countProducts);
 			

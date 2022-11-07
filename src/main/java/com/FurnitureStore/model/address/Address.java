@@ -29,7 +29,7 @@ public class Address {
 	@Column
 	private Boolean isDefault;
 	
-	@Column(name = "address_line_1", nullable = false, length = 255)
+	@Column(name = "address_line_1", length = 255)
 	private String addressLineOne;
 	
 	@ManyToOne()

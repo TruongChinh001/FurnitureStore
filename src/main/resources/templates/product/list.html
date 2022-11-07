@@ -22,22 +22,9 @@
 							<div class="col-lg-12 col-sm-6 sidebar_section">
 								<div class="sidebar_subtitle brands_subtitle">Thương hiệu</div>
 								<ul class="brands_list sidebar_brands">
-									<li class="brand"><a href="#">Apple</a></li>
-									<li class="brand"><a href="#">Beoplay</a></li>
-									<li class="brand"><a href="#">Google</a></li>
-									<li class="brand"><a href="#">Meizu</a></li>
-									<li class="brand"><a href="#">OnePlus</a></li>
-									<li class="brand"><a href="#">Samsung</a></li>
-									<li class="brand"><a href="#">Sony</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
-									<li class="brand"><a href="#">Xiaomi</a></li>
+									<li th:each="b:${brands}">
+										<a th:href="@{|/products?bid=${b.id}|}">[[${b.name}]]</a>
+									</li>
 								</ul>
 							</div>
 							<div class="col-lg-12 col-sm-6 sidebar_section filter_by_section">
@@ -76,19 +63,19 @@
 								</div>
 								<div class="shop_product_count"><span>[[${countProducts}]]</span> sản phẩm được tìm thấy</div>
 								<div class="shop_sorting">
-									<span>Sort by:</span>
+									<span>Sắp xếp:</span>
 									<ul>
 										<li>
-											<span class="sorting_text">highest rated<i
+											<span class="sorting_text">Mặc định<i
 													class="fas fa-chevron-down"></span></i>
 											<ul>
 												<li class="shop_sorting_button"
-													data-isotope-option='{ "sortBy": "original-order" }'>highest rated
+													data-isotope-option='{ "sortBy": "original-order" }'>Mặc định
 												</li>
 												<li class="shop_sorting_button"
-													data-isotope-option='{ "sortBy": "name" }'>name</li>
+													data-isotope-option='{ "sortBy": "name" }'>Tên</li>
 												<li class="shop_sorting_button"
-													data-isotope-option='{ "sortBy": "price" }'>price</li>
+													data-isotope-option='{ "sortBy": "price_asc" }'>Giá</li>
 											</ul>
 										</li>
 									</ul>

@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findByCategoryGroup(Integer id) {
 		return repo.findByCategoryGroup(id);
 	}
+	
+	@Override
+	public List<Product> findByBrand(Integer id) {
+		return repo.findByBrand(id);
+	}
 
 	@Override
 	public Product findById(Integer id) {
@@ -45,6 +50,11 @@ public class ProductServiceImpl implements ProductService{
 	public Integer getCountProductsByCategory(Integer id) {
 		return repo.getCountProductByCategory(id);
 	}
+	
+	@Override
+	public Integer getCountProductsByBrand(Integer id) {
+		return repo.getCountProductByBrand(id);
+	}
 
 	@Override
 	public List<Product> getNewProduct() {
@@ -55,6 +65,11 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> getFeaturedProduct() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Product> getProductsInCategoryGroup(int i) {
+		return repo.getProductsInCategoryGroup(i);
 	}
 	
 }

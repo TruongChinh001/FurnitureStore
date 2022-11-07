@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		http.authorizeRequests()
-			.antMatchers("/order/**")
+			.antMatchers("/order/**", "/checkout", "/your-orders")
 			.authenticated().antMatchers("/admin/**")
 			.hasAnyRole("ADMIN", "STAFF")
 			.antMatchers("/rest/roles")
@@ -65,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.accessDeniedPage("/unauthoried");
 
 		http.logout()
-			.logoutUrl("/logoff")
-			.logoutSuccessUrl("/logoff/success");
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/logout/success");
 
 	}
 

@@ -51,10 +51,10 @@ public class SecurityController {
 		return "user/login";
 	}
 	
-	@RequestMapping("/logoff/success")
+	@RequestMapping("/logout/success")
 	public String logoffSuccess(Model model) {
 		model.addAttribute("message", "Bạn đã đăng xuất");
-		return "user/login";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/register")

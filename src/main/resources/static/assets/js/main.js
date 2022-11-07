@@ -192,6 +192,8 @@
     });
 
     var isotopeButton = $('.filter-tope-group button');
+    var isotopeDefault = $('.filter-tope-group .all');
+    $(isotopeDefault).addClass("how-active1");
 
     $(isotopeButton).each(function () {
         $(this).on('click', function () {

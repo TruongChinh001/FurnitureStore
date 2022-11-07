@@ -31,4 +31,7 @@ public class ProvinceCity {
 	@OneToMany(mappedBy = "provinceCity")
 	private List<Address> addresses;
 	
+	@OneToMany(mappedBy = "provinceCity")
+	private List<District> districts;
+	
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
 <body>
-    <main>
+    <main th:object="${remote}">
         <div class="single-checkout">
             <div class="container">
                 <div class="wrapper">
@@ -14,7 +14,7 @@
                                     <div class="form-group">
                                         <label for="email">Tên tài khoản <span></span></label>
                                         <th:block th:if="${#request.remoteUser}">
-                                            <div class="form-control" id="username">[[${#request.remoteUser}]]</div>
+                                            <div class="form-control" id="username">[[*{username}]]</div>
                                         </th:block>
                                         <th:block th:unless="${#request.remoteUser}">
                                             <input class="form-control" type="username" name="username" id="username"
@@ -26,17 +26,35 @@
                                         <label for="fullname">Họ và tên
                                             <span></span>
                                         </label>
-                                        <input class="form-control" type="fullname" name="fullname" id="fullname" required>
-                                        <!--<div class="form-control">[[${#request.remoteUser}]]</div>-->
+                                        <th:block th:if="${#request.remoteUser}">
+                                            <div class="form-control" id="fullname">[[*{fullname}]]</div>
+                                        </th:block>
+                                        <th:block th:unless="${#request.remoteUser}">
+                                            <input class="form-control" type="fullname" name="fullname" id="fullname"
+                                                required>
+                                        </th:block>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Email <span></span></label>
-                                        <input class="form-control" type="email" name="email" id="email" required>
-                                        <!--<input class="form-control" type="email" name="email" id="email" autocomplete="off" required>-->
+                                        <label for="fullname">Email
+                                            <span></span>
+                                        </label>
+                                        <th:block th:if="${#request.remoteUser}">
+                                            <div class="form-control" id="email">[[*{email}]]</div>
+                                        </th:block>
+                                        <th:block th:unless="${#request.remoteUser}">
+                                            <input class="form-control" type="email" name="email" id="email"
+                                                required>
+                                        </th:block>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại <span></span></label>
-                                        <input class="form-control" type="phone" name="phone" id="phone" required>
+                                        <th:block th:if="${#request.remoteUser}">
+                                            <div class="form-control" id="phoneNumber">[[*{phoneNumber}]]</div>
+                                        </th:block>
+                                        <th:block th:unless="${#request.remoteUser}">
+                                            <input class="form-control" type="phoneNumber" name="phoneNumber" id="phoneNumber"
+                                                required>
+                                        </th:block>
                                     </div>
                                     <div class="form-group">
                                         <label for="address_line_1">Số nhà, Đường <span></span></label>
@@ -45,13 +63,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="province_city">Thành phố / Tỉnh <span></span></label>
-                                        <input class="form-control" ng-model="order.provinceCity" type="province_city"
-                                            name="province_city" id="province_city" required>
+                                        <select class="form-control">
+                                            <option th:each="provinceCity : ${provinceCities}" 
+                                                th:value="${provinceCity.id}"
+                                                ng-click="address.districts()">[[${provinceCity.name}]]</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="district">Quận / Huyện <span></span></label>
-                                        <input class="form-control" ng-model="order.district" type="district"
-                                            name="district" id="district" required>
+                                        <select id="district" class="form-control">
+                                            <option value=""> -- </option>
+                                            <option ng-repeat="district in address.districts" 
+                                                ></option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="ward_village">Phường / Xã <span></span></label>

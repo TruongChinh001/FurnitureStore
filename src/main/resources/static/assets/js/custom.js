@@ -585,7 +585,11 @@ $(document).ready(function () {
 		$('.product_grid').isotope({
 			itemSelector: '.product_item',
 			getSortData: {
-				price: function (itemElement) {
+				price_asc: function (itemElement) {
+					var priceEle = $(itemElement).find('.product_price').text().replace('$', '');
+					return parseFloat(priceEle);
+				},
+				price_desc: function (itemElement) {
 					var priceEle = $(itemElement).find('.product_price').text().replace('$', '');
 					return parseFloat(priceEle);
 				},

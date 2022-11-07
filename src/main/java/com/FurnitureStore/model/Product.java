@@ -79,6 +79,9 @@ public class Product {
 	private Float length;
 	
 	@Column
+	private Float width;
+	
+	@Column
 	private Float height;
 	
 	@Column

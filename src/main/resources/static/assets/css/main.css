@@ -2449,6 +2449,12 @@ input.num-product::-webkit-inner-spin-button {
   text-transform: uppercase;
 }
 
+.line-through{
+  margin-left: 20px;
+  color: rgb(170, 159, 159);
+  text-decoration: line-through;
+}
+
 .mtext-104 {
   font-family: Poppins-Medium;
   font-size: 16px;
@@ -2738,6 +2744,14 @@ input.num-product::-webkit-inner-spin-button {
 
 .size-203 {
   width: 105px;
+}
+
+.size-me-203{
+  width: 200px;
+}
+
+.size-me-204{
+  width: calc(100% - 200px);
 }
 
 .size-204 {
@@ -6148,6 +6162,11 @@ input.num-product::-webkit-inner-spin-button {
   color: #0e8ce4;
 }
 
+.sidebar_categories a,
+.sidebar_brands a{
+  color: rgba(0, 0, 0, 0.5);;
+}
+
 .sidebar_categories,
 .sidebar_brands {
   height: 300px;
@@ -6197,10 +6216,16 @@ input.num-product::-webkit-inner-spin-button {
   padding-left: 1em;
 }
 
-.table-shopping-cart :where(th, td):last-child {
+.table-shopping-cart :where(th, td) :last-child {
   width: 70px;
   text-align: right;
   padding-right: 1em;
+}
+
+.table-shopping-cart.yourorder :where(th, td) :last-child{
+  width: 70px;
+  text-align: right;
+  padding-right: 0 !important;
 }
 
 .table-shopping-cart td .qty-control {
@@ -6224,20 +6249,26 @@ input.num-product::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
-.item-remove {
+.item-remove,
+.item-search {
   width: 50px;
   height: 50px;
   color: rgb(0, 0, 0);
   cursor: pointer;
 }
 
-.item-remove i {
+.item-remove i,
+.item-search i {
   width: 100%;
   height: 100%;
 }
 
 .item-remove:hover {
   color: red;
+}
+
+.item-search:hover{
+  color: rgb(0, 0, 255);
 }
 
 .product-cart .row {

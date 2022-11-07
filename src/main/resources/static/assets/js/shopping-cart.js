@@ -1,6 +1,17 @@
 const app = angular.module('shopping-cart-app', []);
 app.controller('shopping-cart-ctrl', function ($scope, $http) {
 	/* QUẢN LÝ GIỎ HÀNG */
+	
+	$scope.listCategoriesGroup = [];
+
+	$scope.initialize = function(){
+		$http.get('/rest/categories-group').then(resp => {
+			$scope.listCategoriesGroup = resp.data;
+		})
+	}
+
+	$scope.initialize();
+
 	$scope.cartfurniture= {
 		items: [],
 
@@ -72,11 +83,24 @@ app.controller('shopping-cart-ctrl', function ($scope, $http) {
 		}
 	}
 
+	$scope.address = {
+
+		districts(){
+			// provinceCity = this.items.find(item => item.id == id);
+			// $http.get(`/rest/address/district-by-city/${id}`).then(resp => {
+			// 	this.districts = resp.data;
+			// 	console.log(resp.data)
+			// });
+			alert('chạy r');
+		}
+	}
+
 	$scope.cartfurniture.loadFromLocalStorage();
 	$scope.order = {
 		createDate: new Date(),
 		addressLine1:"",
 		provinceCity:"",
+		// provinceCity:{id:$('#provinceCity option:selected').text()},
 		district:"",
 		wardVillage:"",
 		hamlet:"",
