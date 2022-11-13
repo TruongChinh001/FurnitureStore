@@ -13,69 +13,108 @@ import com.FurnitureStore.service.CategoryService;
 import com.FurnitureStore.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductController {
-	
+
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private BrandService brandService;
-	
+
 	@Autowired
 	private CategoryGroupService categoryGroupService;
 
-	@GetMapping("products")
-	public String products(Model model, @RequestParam("bid") Optional<Integer> bid,@RequestParam("cid") Optional<Integer> cid) {
+	@RequestMapping("/products/page/{pageNum}")
+	public String listByPage( //
+			@PathVariable(name = "pageNum") int pageNum, //
+			Model model, //
+			@RequestParam(name = "keyword") Optional<String> keyword) //
+	{
+
+		getFormModelAttributes(model);
 		
-		List<CategoryGroup> categoryGroups = categoryGroupService.findAll();
-		model.addAttribute("categoryGroups", categoryGroups);
+		Page<Product> page = productService.listByPageable(pageNum, keyword.orElse(""));
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("keyword", keyword.orElse(""));
+		model.addAttribute("page", page);
+
+		return "product/list";
+	}
+
+	@GetMapping("/products-by-category/page/{pageNum}")
+	public String listProductByCategoryByPage( //
+			@RequestParam("cid") Integer cid, //
+			@PathVariable("pageNum") Integer pageNum, //
+			RedirectAttributes ra, //
+			Model model) {
 		
-		List<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
+		getFormModelAttributes(model);
 		
-		List<Brand> brands = brandService.findAll();
-		model.addAttribute("brands", brands);
-		
-		if(cid.isPresent()) {
-			Integer countProducts = productService.getCountProductsByCategory(cid.get());
-			model.addAttribute("countProducts", countProducts);
-			List<Product> list = productService.findByCategory(cid.get());
-			model.addAttribute("products", list);
-		} else if(bid.isPresent()) {
-			Integer countProducts = productService.getCountProductsByBrand(bid.get());
-			model.addAttribute("countProducts", countProducts);
-			List<Product> list = productService.findByBrand(bid.get());
-			model.addAttribute("products", list);
-		}
-		
-		else {
-			Integer countProducts = productService.getCountProducts();
-			model.addAttribute("countProducts", countProducts);
-			
-			List<Product> list = productService.findAll();
-			model.addAttribute("products", list);
-		}
+		Category category = categoryService.findById(cid);
+		Page<Product> page = productService.listByCategory(pageNum, cid);
+
+		model.addAttribute("category", category);
+		model.addAttribute("cid", cid);
+		model.addAttribute("page", page);
+
 		return "product/list";
 	}
 	
+	@GetMapping("/products-by-brand/page/{pageNum}")
+	public String listProductByBrandByPage( //
+			@RequestParam("bid") Integer bid, //
+			@PathVariable("pageNum") Integer pageNum, //
+			RedirectAttributes ra, //
+			Model model) {
+		
+		getFormModelAttributes(model);
+		
+		Brand brand = brandService.findById(bid);
+		Page<Product> page = productService.listByBrand(pageNum, bid);
+
+		model.addAttribute("brand", brand);
+		model.addAttribute("bid", bid);
+		model.addAttribute("page", page);
+
+		return "product/list";
+	}
+
+	@GetMapping("products")
+	public String productsByPage(Model model) {
+		return listByPage(1, model, Optional.empty());
+	}
+
 	@RequestMapping("/product/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
-        
-        Product product = productService.findById(id);
-        model.addAttribute("product", product);
-        
-        return "product/detail";
-    }
+	public String detail(Model model, @PathVariable("id") Integer id) {
+
+		Product product = productService.findById(id);
+		model.addAttribute("product", product);
+
+		return "product/detail";
+	}
 	
+	private void getFormModelAttributes(Model model) {
+		List<CategoryGroup> categoryGroups = categoryGroupService.findAll();
+		model.addAttribute("categoryGroups", categoryGroups);
+
+		List<Category> categories = categoryService.findAll();
+		model.addAttribute("categories", categories);
+
+		List<Brand> brands = brandService.findAll();
+		model.addAttribute("brands", brands);
+	}
+
 }

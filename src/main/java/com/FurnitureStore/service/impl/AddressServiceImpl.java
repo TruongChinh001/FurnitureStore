@@ -30,4 +30,9 @@ public class AddressServiceImpl implements AddressService{
 		return districtRepo.findAllByProvinceCity(id);
 	}
 
+	@Override
+	public ProvinceCity getOneProvinceCity(Integer id) {
+		return provinceCityRepo.findById(id).get();
+	}
+
 }

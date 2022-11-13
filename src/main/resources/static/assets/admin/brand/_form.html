@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-sm-4 text-center" ng-if="form.logo != null">
                             <label for="logo">
-                                <img id="output" ng-src="/assets/images/brands/{{form.logo}}" style="max-width: 100%;"
+                                <img id="output" ng-src="/assets/images/{{form.logo}}" style="max-width: 100%;"
                                     height="100%">
                             </label>
                         </div>
@@ -24,11 +24,11 @@
                                 <input type="hidden" ng-model="form.id" class="form-control">
                             </div>
                             <div class="form-group col-12">
-                                <div>Name</div>
+                                <div>Tên thương hiệu</div>
                                 <input ng-model="form.name" class="form-control">
                             </div>
                             <div class="form-group col-12">
-                                <div>Image</div>
+                                <div>Logo thương hiệu</div>
                                 <input type="file" class="form-control" id="logo"
                                 onchange="angular.element(this).scope().imageChanged(this.files)">
                                     <!-- onchange="angular.element(this).scope().imageChanged(this.files) -->
@@ -39,16 +39,16 @@
                     <div class="row">
                         <div class="card-footer text-end text-white bg-white">
                             <button ng-click="create()" class="btn btn-primary">
-                                Create
+                                Thêm
                             </button>
                             <button ng-click="update()" class="btn btn-success">
-                                Update
+                                Sửa
                             </button>
                             <button ng-click="delete(form)" class="btn btn-danger">
-                                Delete
+                                Xóa
                             </button>
                             <button ng-click="reset()" class="btn btn-info">
-                                Reset
+                                Làm mới
                             </button>
                         </div>
                     </div>

@@ -1,5 +1,7 @@
 package com.FurnitureStore.service.impl;
 
+import java.util.List;
+
 import com.FurnitureStore.model.Role;
 import com.FurnitureStore.repository.RoleRepository;
 import com.FurnitureStore.service.RoleService;
@@ -16,6 +18,11 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public Role getById(String id) {
 		return repo.findById(id).get();
+	}
+
+	@Override
+	public List<Role> getAll() {
+		return repo.findAll();
 	}
 
 }

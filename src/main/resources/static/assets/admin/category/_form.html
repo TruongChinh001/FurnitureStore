@@ -1,36 +1,23 @@
 <div class="card my-4">
     <div class="card-header bg-primary">
-        <h5 class="text-light fw-bold">ACCOUNT EDITION</h5>
+        <h5 class="text-light fw-bold">THÔNG TIN DANH MỤC</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">
-                    <div class="col-sm-4 text-center" ng-if="form.image == null">
-                        <label for="image">
-                            <img ng-src="/assets/images/default.png" style="max-width: 100%;" height="100%">
-                        </label>
+                    <div class="form-group col-6">
+                        <div>Tên danh mục</div>
+                        <input ng-model="form.name" class="form-control">
                     </div>
-                    <div class="col-sm-4 text-center" ng-if="form.image != null">
-                        <label for="image">
-                            <img ng-src="/assets/images/categories/{{form.image}}" style="max-width: 100%;" height="100%">
-                        </label>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="form-group col-12">
-                            <div>Id</div>
-                            <input ng-model="form.parentId" class="form-control">
-                        </div>
-                        <div class="form-group col-12">
-                            <div>Name</div>
-                            <input ng-model="form.name" class="form-control">
-                        </div>
-                         
-                        <div class="form-group col-12">
-                            <div>Image</div>
-                        <input type="file" class="form-control" id="image"
-                            onchange="angular.element(this).scope().imageChanged(this.files)">
-                        </div>
+
+                    <div class="form-group col-6">
+                        <div>Nhóm sản phẩm</div>
+                        <input ng-model="form.categoryGroup.id" class="form-control" list="listCategoriesGroup" id="categoryGroup"
+                            placeholder="Chọn nhóm sản phẩm">
+                        <datalist id="listCategoriesGroup">
+                            <option ng-repeat="categoryGroup in listCategoriesGroup" value="{{categoryGroup.id}}">{{categoryGroup.name}}</option>
+                        </datalist>
                     </div>
                 </div>
                 <div class="row">

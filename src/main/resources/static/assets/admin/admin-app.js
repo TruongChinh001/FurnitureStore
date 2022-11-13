@@ -1,6 +1,4 @@
-var app = angular.module("admin-app", ["ngRoute" 
-// ", ng-fusioncharts"
-]);
+var app = angular.module("admin-app", ["ngRoute", "textAngular"]);
 
 
 app.controller('remote-user', function($scope, $http){
@@ -9,6 +7,7 @@ app.controller('remote-user', function($scope, $http){
     $http.get('/rest/remote').then(resp => {
         $scope.session = resp.data;
     })
+
 })
 
 app.config(function($routeProvider){

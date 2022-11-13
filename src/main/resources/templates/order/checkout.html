@@ -62,25 +62,22 @@
                                             name="address_line_1" id="address_line_1" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="province_city">Thành phố / Tỉnh <span></span></label>
-                                        <select class="form-control">
-                                            <option th:each="provinceCity : ${provinceCities}" 
-                                                th:value="${provinceCity.id}"
-                                                ng-click="address.districts()">[[${provinceCity.name}]]</option>
+                                        <label>Thành phố / Tỉnh <span></span></label>
+                                        <select class="form-control" id="city">
+                                            <option value="" selected>Chọn tỉnh thành</option> 
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="district">Quận / Huyện <span></span></label>
+                                        <label>Quận / Huyện <span></span></label>
                                         <select id="district" class="form-control">
-                                            <option value=""> -- </option>
-                                            <option ng-repeat="district in address.districts" 
-                                                ></option>
+                                            <option value="" selected>Chọn quận huyện</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="ward_village">Phường / Xã <span></span></label>
-                                        <input class="form-control" ng-model="order.wardVillage" type="ward_village"
-                                            name="ward_village" id="ward_village" required>
+                                        <label>Phường / Xã <span></span></label>
+                                        <select id="ward" class="form-control">
+                                            <option value="" selected>Chọn phường xã</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="hamlet">Ấp <span></span></label>

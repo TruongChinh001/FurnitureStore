@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,7 @@ public class ProvinceCity {
 	@Column(nullable = false, length = 45)
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "provinceCity")
 	private List<Address> addresses;
 	

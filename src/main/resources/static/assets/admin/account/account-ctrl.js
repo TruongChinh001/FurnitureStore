@@ -13,7 +13,10 @@ app.controller('account-ctrl', function ($scope, $http) {
                     item.photo = "default.png";
                 }
             })
-        })
+        });
+
+
+        $scope.form.createDate = new Date();
     }
 
     // Khởi đầu
@@ -84,43 +87,12 @@ app.controller('account-ctrl', function ($scope, $http) {
         }).then(resp => {
             $scope.form.photo = resp.data.name;
         }).catch(error => {
-            alert("Lỗi upload hình ảnh");
+            alert("Dung lượng file quá lớn");
             console.log("Error", error);
         })
     }
 
-    //phân trang
-    // $scope.pager = {
-    //     page:0,
-    //     size:10,
-    //     get items(){
-    //         var start = this.page * this.size;
-    //         return $scope.items.slice(start, start + this.size);
-    //     },
-    //     get count(){
-    //         return Math.ceil(1.0 * $scope.items.length / this.size)
-    //     },
-    //     first(){
-    //         this.page = 0;
-    //     },
-    //     prev(){
-    //         this.page--;
-    //         if(this.page < 0){
-    //             this.last();
-    //         }
-    //     },
-    //     next(){
-    //         this.page++;
-    //         if(this.page >= this.count){
-    //             this.first();
-    //         }
-    //     },
-    //     last(){
-    //         this.page = this.count - 1;
-    //     }
-    // }
-
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.start = 0;
     $scope.pageIndex = 0;
 
@@ -130,6 +102,7 @@ app.controller('account-ctrl', function ($scope, $http) {
             $scope.pageIndex++;
         }
     }
+
     $scope.prev = function () {
         if ($scope.start > 0) {
             $scope.start -= $scope.pageSize;
@@ -140,12 +113,14 @@ app.controller('account-ctrl', function ($scope, $http) {
         $scope.start = 0;
         $scope.pageIndex = 0;
     }
+
     $scope.last = function () {
         sotrang = Math.ceil($scope.items.length / $scope.pageSize);
         $scope.start = $scope.pageSize * (sotrang - 1);
         $scope.pageIndex = $scope.count() - 1;
     }
-    $scope.count = function(){
+
+    $scope.count = function () {
         return Math.ceil(1.0 * $scope.items.length / $scope.pageSize);
     }
 

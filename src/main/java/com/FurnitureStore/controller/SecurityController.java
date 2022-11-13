@@ -2,12 +2,15 @@ package com.FurnitureStore.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.FurnitureStore.model.Account;
 import com.FurnitureStore.model.AccountRegistrationDTO;
 import com.FurnitureStore.model.Role;
 import com.FurnitureStore.service.AccountService;
 import com.FurnitureStore.service.AuthorityService;
 import com.FurnitureStore.service.RoleService;
+import com.FurnitureStore.utility.SessionUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,9 @@ public class SecurityController {
 	AccountService accountService;
 	
 	@Autowired
+	private SessionUtil session;
+	
+	@Autowired
 	RoleService roleService;
 	
 	@Autowired
@@ -35,7 +41,12 @@ public class SecurityController {
 	}
 	
 	@RequestMapping("/login/success")
-	public String loginSuccess(Model model) {
+	public String loginSuccess(Model model, HttpServletRequest req) {
+		String username = req.getRemoteUser();
+		Account account = accountService.getById(username);
+		if(account != null) {
+			session.set("accountLogined", account);
+		}
 		return "redirect:/";
 	}
 	

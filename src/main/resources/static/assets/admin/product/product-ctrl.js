@@ -1,9 +1,17 @@
 app.controller('product-ctrl', function ($scope, $http) {
 
+
+    $scope.orightml = '<h2>Mô tả ngắn!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li>Super Easy <b>Theming</b> Options</li><li style="color: green;">Simple Editor Instance Creation</li><li>Safely Parses Html for Custom Toolbar Icons</li><li class="text-danger">Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE8+</li></ol><p><b>Code at GitHub:</b> <a href="https://github.com/fraywing/textAngular">Here</a> </p>';
+    $scope.htmlcontent = $scope.orightml;
+    $scope.disabled = false;
+
+
     // $filter('filter')(array, expression, comparator, anyPropertyKey)
     $scope.items = [];
     $scope.listCategories = [];
     $scope.listBrands = [];
+    $scope.listUnitProducts = [];
+    $scope.listMaterials = [];
     $scope.form = {};
 
     $scope.initialize = function () {
@@ -12,6 +20,12 @@ app.controller('product-ctrl', function ($scope, $http) {
         })
         $http.get('/rest/categories').then(resp => {
             $scope.listCategories = resp.data;
+        })
+        $http.get('/rest/unit-products').then(resp => {
+            $scope.listUnitProducts = resp.data;
+        })
+        $http.get('/rest/materials').then(resp => {
+            $scope.listMaterials = resp.data;
         })
         $http.get('/rest/products').then(resp => {
             $scope.items = resp.data;
@@ -27,25 +41,7 @@ app.controller('product-ctrl', function ($scope, $http) {
     // Khởi đầu
     $scope.initialize();
 
-    $scope.richText = function () {
-        $('#shortDesc').richText();
-        $('#longDesc').richText();
-        if ($('#shortDesc').empty()) {
-            $('#shortDesc').remove();
-        } if ($('#longDesc').empty()) {
-            $('#longDesc').remove()
-        }
-    }
-
-    // Xóa form
-    // $scope.reset = function () {
-    //     $scope.form = {
-    //         createDate: new Date(),
-    //         image: 'default.png',
-    //         available: true
-    //     }
-    // }
-    $scope.reset = function(){
+    $scope.reset = function () {
         $scope.form = {};
     }
 
@@ -60,23 +56,11 @@ app.controller('product-ctrl', function ($scope, $http) {
     $scope.create = function () {
         var item = angular.copy($scope.form);
 
-        // // item.brand = Number(item.brand);
-        // $http.get(`/rest/brands/${item.brand}`).then(resp => {
-        //     item.brand = resp.data;
-        // })
-
-        // // item.category = Number(item.category);
-        // $http.get(`/rest/categories/${item.category}`).then(resp => {
-        //     item.category = resp.data;
-        // })
-        // item.mainImage = "null";
-        // item.shortDesc = "abc";
-        // item.longDesc = "cccc";
-
         $http.post(`/rest/products`, item).then(resp => {
             $scope.items.push(resp.data);
             console.log(resp.data);
             $scope.reset();
+            $scope.initialize();
             alert('Thêm mới sản phẩm thành công!');
         }).catch(error => {
             alert('Thêm mới sản phẩm thất bại!');
@@ -99,91 +83,60 @@ app.controller('product-ctrl', function ($scope, $http) {
     }
 
     // xóa sp
-    // $scope.delete = function (item) {
-    //     $http.delete(`/rest/products/${item.id}`).then(resp => {
-    //         var index = $scope.items.findIndex(p => p.id == item.id);
-    //         $scope.items.splice(index, 1);
-    //         $scope.reset();
-    //         alert('Xóa sản phẩm thành công!')
-    //     }).catch(error => {
-    //         alert('Xóa sản phẩm thất bại!')
-    //         console.log("Error", error)
-    //     })
-    // }
+    $scope.delete = function (item) {
+        $http.delete(`/rest/products/${item.id}`).then(resp => {
+            var index = $scope.items.findIndex(p => p.id == item.id);
+            $scope.items.splice(index, 1);
+            $scope.reset();
+            alert('Xóa sản phẩm thành công!')
+        }).catch(error => {
+            alert('Xóa sản phẩm thất bại!')
+            console.log("Error", error)
+        })
+    }
 
     // upload hình
-    // $scope.imageChanged = function(files){
-    //     var data = new FormData();
-    //     data.append('file', files[0]);
-    //     $http.post('/rest/products/upload/images', data, {
-    //         transformRequest: angular.identity,
-    //         headers: {'Content-Type': 'multipart/form-data'}
-    //     }).then(resp => {
-    //         $scope.form.mainImage = resp.data.name;
-    //     }).catch(error => {
-    //         alert('Lỗi tải lên hình ảnh');
-    //         console.log("Error", error);
-    //     })
-    // }
+    $scope.imageChanged = function (files) {
+        var data = new FormData();
+        data.append('file', files[0]);
+        $http.post('/rest/upload/images', data, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(resp => {
+            $scope.form.mainImage = resp.data.name;
+        }).catch(error => {
+            alert("Dung lượng file quá lớn");
+            console.log("Error", error);
+        })
+    }
 
-    //phân trang
-    // $scope.pager = {
-    //     page:0,
-    //     size:10,
-    //     get items(){
-    //         var start = this.page * this.size;
-    //         return $scope.items.slice(start, start + this.size);
-    //     },
-    //     get count(){
-    //         return Math.ceil(1.0 * $scope.items.length / this.size)
-    //     },
-    //     first(){
-    //         this.page = 0;
-    //     },
-    //     prev(){
-    //         this.page--;
-    //         if(this.page < 0){
-    //             this.last();
-    //         }
-    //     },
-    //     next(){
-    //         this.page++;
-    //         if(this.page >= this.count){
-    //             this.first();
-    //         }
-    //     },
-    //     last(){
-    //         this.page = this.count - 1;
-    //     }
-    // }
+    $scope.pageSize = 10;
+    $scope.start = 0;
+    $scope.pageIndex = 0;
 
-    // $scope.pageSize = 5;
-    // $scope.start = 0;
-    // $scope.pageIndex = 0;
-
-    // $scope.next = function () {
-    //     if ($scope.start < $scope.items.length - $scope.pageSize) {
-    //         $scope.start += $scope.pageSize;
-    //         $scope.pageIndex++;
-    //     }
-    // }
-    // $scope.prev = function () {
-    //     if ($scope.start > 0) {
-    //         $scope.start -= $scope.pageSize;
-    //         $scope.pageIndex--;
-    //     }
-    // }
-    // $scope.first = function () {
-    //     $scope.start = 0;
-    //     $scope.pageIndex = 0;
-    // }
-    // $scope.last = function () {
-    //     sotrang = Math.ceil($scope.items.length / $scope.pageSize);
-    //     $scope.start = $scope.pageSize * (sotrang - 1);
-    //     $scope.pageIndex = $scope.count() - 1;
-    // }
-    // $scope.count = function () {
-    //     return Math.ceil(1.0 * $scope.items.length / $scope.pageSize);
-    // }
+    $scope.next = function () {
+        if ($scope.start < $scope.items.length - $scope.pageSize) {
+            $scope.start += $scope.pageSize;
+            $scope.pageIndex++;
+        }
+    }
+    $scope.prev = function () {
+        if ($scope.start > 0) {
+            $scope.start -= $scope.pageSize;
+            $scope.pageIndex--;
+        }
+    }
+    $scope.first = function () {
+        $scope.start = 0;
+        $scope.pageIndex = 0;
+    }
+    $scope.last = function () {
+        sotrang = Math.ceil($scope.items.length / $scope.pageSize);
+        $scope.start = $scope.pageSize * (sotrang - 1);
+        $scope.pageIndex = $scope.count() - 1;
+    }
+    $scope.count = function () {
+        return Math.ceil(1.0 * $scope.items.length / $scope.pageSize);
+    }
 
 })

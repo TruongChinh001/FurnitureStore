@@ -27,29 +27,15 @@ app.controller('brand-ctrl', function($scope, $http){
     $scope.create = function () {
         var item = angular.copy($scope.form);
         $http.post(`/rest/brands`, item).then(resp => {
-            // $scope.item.multipartFile = $scope.item.id;
             $scope.items.push(resp.data);
             $scope.reset();
+            scope.initialize();
             alert('Thêm mới thương hiệu thành công!');
         }).catch(error => {
             alert('Thêm mới thương hiệu thất bại!');
             console.log('Error', error);
         })
     }
-
-    // $scope.imageChanged = function (files) {
-    //     var data = new FormData();
-    //     data.append('multipartFile', files[0]);
-    //     $http.post(`/rest/brands/upload/images`, data, {
-    //         transformRequest: angular.identity,
-    //         headers: { 'Content-Type': undefined }
-    //     }).then(resp => {
-    //         $scope.form.logo = resp.data.name;
-    //     }).catch(error => {
-    //         alert("Lỗi upload hình ảnh");
-    //         console.log("Error", error);
-    //     })
-    // }
 
     $scope.update = function(){
         var item = angular.copy($scope.form);
@@ -76,33 +62,48 @@ app.controller('brand-ctrl', function($scope, $http){
         });
     }
 
-    // upload
-    $scope.imageChanged = function(files){
+    // upload hình
+    $scope.imageChanged = function (files) {
         var data = new FormData();
         data.append('file', files[0]);
-        $http.post('/rest/brands/upload/images', data, {
+        $http.post('/rest/upload/images', data, {
             transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
+            headers: { 'Content-Type': undefined }
         }).then(resp => {
             $scope.form.logo = resp.data.name;
         }).catch(error => {
-            alert('Lỗi tải lên hình ảnh');
+            alert("Dung lượng file quá lớn");
             console.log("Error", error);
         })
     }
 
+
     $scope.pageSize = 10;
     $scope.start = 0;
     $scope.pageIndex = 0;
+    $scope.pageNo = 0;
 
-    $scope.next = function(){
-        if($scope.start < $scope.items.length - $scope.pageSize){
+    $scope.next = function () {
+        if ($scope.start < $scope.items.length - $scope.pageSize) {
             $scope.start += $scope.pageSize;
             $scope.pageIndex++;
         }
     }
-
-
+    $scope.prev = function () {
+        if ($scope.start > 0) {
+            $scope.start -= $scope.pageSize;
+            $scope.pageIndex--;
+        }
+    }
+    $scope.first = function () {
+        $scope.start = 0;
+        $scope.pageIndex = 0;
+    }
+    $scope.last = function () {
+        sotrang = Math.ceil($scope.items.length / $scope.pageSize);
+        $scope.start = $scope.pageSize * (sotrang - 1);
+        $scope.pageIndex = $scope.count() - 1;
+    }
     $scope.count = function(){
         return Math.ceil(1.0 * $scope.items.length / $scope.pageSize);
     }

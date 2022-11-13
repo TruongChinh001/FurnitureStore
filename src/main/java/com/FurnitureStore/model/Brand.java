@@ -30,6 +30,9 @@ public class Brand {
 	@Column(nullable = false, length = 255)
 	private String name;
 	
+	@Column()
+	private String logo;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "brand")
 	private List<Product> products;

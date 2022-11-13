@@ -15,7 +15,7 @@
             <tbody ng-repeat="item in items | limitTo: pageSize: start">
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
-                <td><img ng-src="/assets/images/brands/{{item.logo}}" style="width: 100px;"></td>
+                <td><img ng-src="/assets/images/{{item.logo}}" style="width: 100px;"></td>
                 <td class="float-end">
                     <div class="btn-group-xs">
                         <button ng-click="edit(item)" class="btn"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -26,21 +26,17 @@
         </table>
     </div>
     <div class="card-footer text-center">
-        <button ng-click="first();" class="btn btn-warning">
-            <i class="fa-solid fa-backward-step"></i>
+        <button ng-click="first();" class="btn">
             Trang đầu
         </button>
-        <button ng-click="prev();" class="btn btn-info">
-            <i class="fa-solid fa-backward"></i>
-            Trang trước
+        <button ng-click="prev();" class="btn">
+            <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <button class="btn btn-success">{{pageIndex + 1}} of {{count()}}</button>
-        <button ng-click="next();" class="btn btn-info">
-            <i class="fa-solid fa-forward"></i>
-            Trang kế
+        <button class="btn">{{pageIndex + 1}} / {{count()}}</button>
+        <button ng-click="next();" class="btn">
+            <i class="fa-solid fa-chevron-right"></i>
         </button>
-        <button ng-click="last();" class="btn btn-warning">
-            <i class="fa-solid fa-forward-step"></i>
+        <button ng-click="last();" class="btn">
             Trang cuối
         </button>
     </div>

@@ -41,9 +41,29 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public void save(Account account) {
+	public Account save(Account account) {
 		account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-		repo.save(account);
+		return repo.save(account);
+	}
+
+	@Override
+	public Account create(Account account) {
+		return repo.save(account);
+	}
+
+	@Override
+	public Account update(Account account) {
+		return repo.save(account);
+	}
+
+	@Override
+	public void delete(String username) {
+		repo.deleteById(username);
+	}
+
+	@Override
+	public List<Account> getAdministrators() {
+		return repo.getAdministrator();
 	}
 	
 }

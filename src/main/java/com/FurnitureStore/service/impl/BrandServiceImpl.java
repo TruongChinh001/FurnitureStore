@@ -20,4 +20,24 @@ public class BrandServiceImpl implements BrandService{
 		return repo.findAll();
 	}
 
+	@Override
+	public Brand findById(Integer bid) {
+		return repo.findById(bid).get();
+	}
+
+	@Override
+	public Brand create(Brand brand) {
+		return repo.save(brand);
+	}
+
+	@Override
+	public Brand update(Brand brand) {
+		return repo.save(brand);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		repo.deleteById(id);
+	}
+
 }

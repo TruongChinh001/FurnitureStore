@@ -7,8 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,7 +33,12 @@ public class WardVillage {
 	@Column(nullable = false, length = 45)
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "wardVillage")
 	private List<Address> addresses;
+	
+	@ManyToOne
+	@JoinColumn(name = "district_id")
+	private District district;
 	
 }

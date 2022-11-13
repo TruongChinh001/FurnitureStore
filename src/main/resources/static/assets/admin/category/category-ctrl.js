@@ -2,10 +2,15 @@ app.controller('category-ctrl', function ($scope, $http) {
 
     $scope.items = [];
     $scope.listCategories = [];
+    $scope.listCategoriesGroup = [];
     $scope.form = {};
 
     $scope.initialize = function () {
         // load categories
+        $http.get('/rest/categories-group').then(resp => {
+            $scope.listCategoriesGroup = resp.data;
+        })
+
         $http.get('/rest/categories').then(resp => {
             $scope.items = resp.data;
         })
@@ -69,24 +74,10 @@ app.controller('category-ctrl', function ($scope, $http) {
         })
     }
 
-    //upload hình
-    $scope.imageChanged = function (files) {
-        var data = new FormData();
-        data.append('file', files[0]);
-        $http.post('/rest/categories/upload/images', data, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).then(resp => {
-            $scope.form.image = resp.data.name;
-        }).catch(error => {
-            alert("Lỗi upload hình ảnh");
-            console.log("Error", error);
-        })
-    }
-
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.start = 0;
     $scope.pageIndex = 0;
+    $scope.pageNo = 0;
 
     $scope.next = function () {
         if ($scope.start < $scope.items.length - $scope.pageSize) {

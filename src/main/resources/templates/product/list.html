@@ -3,8 +3,35 @@
 
 <body>
 	<main>
+		<!-- breadcrumb -->
+		<div class="container">
+			<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+				<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+					Trang chủ
+					<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+				</a>
+
+				<span th:if="${(category != null || brand != null)}" class="stext-109 cl4">
+					<a class="stext-109 cl8 hov-cl1 trans-04" href="/products">Tất cả sản phẩm</a>
+					<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+				</span>
+
+				<span th:if="${(category != null && brand == null)}" class="stext-109 cl4">
+					[[${category.name}]]
+				</span>
+
+				<span th:if="${(category == null && brand != null)}" class="stext-109 cl4">
+					[[${brand.name}]]
+				</span>
+
+				<span th:if="${(category == null && brand == null)}" class="stext-109 cl4">
+					Tất cả sản phẩm
+				</span>
+
+			</div>
+		</div>
 		<div class="shop">
-			<div class="container" >
+			<div class="container">
 				<div class="row">
 					<div class="col-lg-3">
 						<!-- Shop Sidebar -->
@@ -15,7 +42,7 @@
 								<div class="sidebar_subtitle categories_subtitle">Danh mục</div>
 								<ul class="sidebar_categories">
 									<li th:each="c:${categories}">
-										<a th:href="@{|/products?cid=${c.id}|}">[[${c.name}]]</a>
+										<a  th:href="@{|/products-by-category/page/1?cid=${c.id}|}">[[${c.name}]]</a>
 									</li>
 								</ul>
 							</div>
@@ -23,17 +50,18 @@
 								<div class="sidebar_subtitle brands_subtitle">Thương hiệu</div>
 								<ul class="brands_list sidebar_brands">
 									<li th:each="b:${brands}">
-										<a th:href="@{|/products?bid=${b.id}|}">[[${b.name}]]</a>
+										<a th:href="@{|/products-by-brand/page/1?bid=${b.id}|}">[[${b.name}]]</a>
 									</li>
 								</ul>
 							</div>
-							<div class="col-lg-12 col-sm-6 sidebar_section filter_by_section">
+							<!-- <div class="col-lg-12 col-sm-6 sidebar_section filter_by_section">
 								<div class="sidebar_title">Filter By</div>
 								<div class="sidebar_subtitle price_subtitle">Price</div>
 								<div class="filter_price">
 									<div id="slider-range" class="slider_range"></div>
 									<p>Range: </p>
-									<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
+									<p><input type="text" id="amount" class="amount" readonly
+											style="border:0; font-weight:bold;"></p>
 								</div>
 							</div>
 							<div class="col-lg-12 col-sm-6 sidebar_section">
@@ -47,7 +75,7 @@
 									<li class="color"><a href="#"
 											style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 
 					</div>
@@ -56,13 +84,17 @@
 
 						<!-- Shop Content -->
 
-						<div class="shop_content">
+						<div class="shop_content align-items-center">
 							<div class="shop_bar clearfix">
 								<div class="row" id="main">
 									<button class="openbtn" onclick="openNav()">&#9776; Lọc sản phẩm</button>
 								</div>
-								<div class="shop_product_count"><span>[[${countProducts}]]</span> sản phẩm được tìm thấy</div>
-								<div class="shop_sorting">
+								<div class="shop_product_count m-t-7 d-flex">
+									<span th:if="${page.totalElements > 0}" class="m-r-10">[[${page.totalElements}]]</span>
+									<span th:if="${page.totalElements == 0}" class="m-r-10">0</span> sản phẩm được tìm thấy
+								</div>
+
+								<div class="shop_sorting m-t-7">
 									<span>Sắp xếp:</span>
 									<ul>
 										<li>
@@ -80,900 +112,90 @@
 										</li>
 									</ul>
 								</div>
+								<div class="flex-w" style="justify-content: flex-end;">
+									<div
+										class="flex-c-m stext-106 m-r-30 cl6 size-105 bor4 pointer hov-btn3 trans-04 js-show-search">
+										<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+										<i
+											class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+										Search
+									</div>
+								</div>
+								<!-- Search product -->
+								<form th:action="@{/products/page/1}">
+									<div class="dis-none panel-search w-full p-t-10 p-b-15">
+										<div class="bor8 dis-flex p-l-15">
+											<input th:value="${keyword}" class="mtext-107 cl2 size-114 plh2 p-r-15"
+												type="text" name="keyword" placeholder="Tìm kiếm">
+											<button class="size-113-me flex-c-m fs-16 cl2 hov-cl1 trans-04">
+												<i class="zmdi zmdi-search m-r-10"></i>
+												Tìm kiếm
+											</button>
+										</div>
+									</div>
+								</form>
 							</div>
 
 							<div class="product_grid">
 								<div class="product_grid_border"></div>
 
 								<!-- Product Item -->
-								<div th:each="p:${products}">
-									<div class="product_item is_new">
-										<div class="product_border"></div>
-										<div class="product_image d-flex flex-column align-items-center justify-content-center">
-											<img th:src="@{|/assets/images/${p.mainImage}|}" alt="">
-										</div>
-										<div class="product_content">
-											<div class="product_price">[[${#numbers.formatCurrency(p.price)}]]</div>
-											<div class="product_name">
-												<div><a th:href="@{|/product/detail/${p.id}|}"
-														tabindex="0">[[${p.name}]]</a></div>
-											</div>
-										</div>
-										<div class="product_footer">
-											<div class="add-to-cart">
-												<button th:attr="ng-click=@{|cartfurniture.add(${p.id})|}">
-													<i class="fa-solid fa-cart-plus"></i> <span>Chọn
-														mua</span>
-												</button>
-											</div>
-										</div>
-										<div class="product_fav"><i class="fas fa-heart"></i></div>
-										<ul class="product_marks">
-											<li class="product_mark product_discount">-25%</li>
-											<li class="product_mark product_new">new</li>
-										</ul>
+								<div th:each="p : ${page.content}" class="product_item is_new">
+									<div class="product_border"></div>
+									<div
+										class="product_image d-flex flex-column align-items-center justify-content-center">
+										<img th:src="@{|/assets/images/${p.mainImage}|}" alt="">
 									</div>
+									<div class="product_content">
+										<div class="product_price">[[${#numbers.formatCurrency(p.price)}]]</div>
+										<div class="product_name">
+											<div><a th:href="@{|/product/detail/${p.id}|}"
+													tabindex="0">[[${p.name}]]</a></div>
+										</div>
+									</div>
+									<div class="product_footer">
+										<div class="add-to-cart">
+											<button th:attr="ng-click=@{|cartfurniture.add(${p.id})|}">
+												<i class="fa-solid fa-cart-plus"></i> <span>Chọn
+													mua</span>
+											</button>
+										</div>
+									</div>
+									<div class="product_fav"><i class="fas fa-heart"></i></div>
+									<ul class="product_marks">
+										<li class="product_mark product_discount">-25%</li>
+										<li class="product_mark product_new">new</li>
+									</ul>
 								</div>
 							</div>
 
 							<!-- Shop Page Navigation -->
 
-							<div class="shop_page_nav d-flex flex-row">
-								<div class="page_prev d-flex flex-column align-items-center justify-content-center"><i
-										class="fas fa-chevron-left"></i></div>
+							<div th:if="${page.totalElements > 0}" class="shop_page_nav d-flex flex-row">
+								<li class="page_prev d-flex flex-column align-items-center justify-content-center">
+									<a th:href="@{'/products/page/1'}">
+										<i class="fas fa-chevron-left"></i>
+									</a>
+									
+								</li>
 								<ul class="page_nav d-flex flex-row">
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">...</a></li>
-									<li><a href="#">21</a></li>
-								</ul>
-								<div class="page_next d-flex flex-column align-items-center justify-content-center"><i
-										class="fas fa-chevron-right"></i></div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Product -->
-		<div class="bg0 m-t-23 p-b-140">
-			<div class="container">
-				<div class="flex-w flex-sb-m p-b-52">
-					<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-							All Products
-						</button>
-
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-							Women
-						</button>
-
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-							Men
-						</button>
-
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-							Bag
-						</button>
-
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-							Shoes
-						</button>
-
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-							Watches
-						</button>
-					</div>
-
-					<div class="flex-w flex-c-m m-tb-10">
-						<div
-							class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-							<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-							<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-							Filter
-						</div>
-
-						<div
-							class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-							<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-							<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-							Search
-						</div>
-					</div>
-
-					<!-- Search product -->
-					<div class="dis-none panel-search w-full p-t-10 p-b-15">
-						<div class="bor8 dis-flex p-l-15">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
-								placeholder="Search">
-						</div>
-					</div>
-
-					<!-- Filter -->
-					<div class="dis-none panel-filter w-full p-t-10">
-						<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-							<div class="filter-col1 p-r-15 p-b-27">
-								<div class="mtext-102 cl2 p-b-15">
-									Sort By
-								</div>
-
-								<ul>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											Default
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											Popularity
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											Average rating
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-											Newness
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											Price: Low to High
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											Price: High to Low
-										</a>
+									<li th:class="${page.number <= 0 ? 'page-item disabled' : 'page-item'}"
+									th:each="i : ${#numbers.sequence(1, page.totalPages)}">
+										<a th:if="${keyword != null}" th:href="@{'/products/page/' + ${i}} + '?keyword=' + ${keyword}">[[${i}]]</a>
+										<a th:if="${category != null}" th:href="@{'/products-by-category/page/' + ${i}} + '?cid=' + ${category.id}">[[${i}]]</a>
+										<a th:if="${brand != null}" th:href="@{'/products-by-brand/page/' + ${i}} + '?bid=' + ${brand.id}">[[${i}]]</a>
 									</li>
 								</ul>
+								<li class="page_next d-flex flex-column align-items-center justify-content-center">
+									<a th:href="@{'/products/page/' + ${page.totalPages}}">
+										<i class="fas fa-chevron-right"></i>
+									</a>
+								</li>
 							</div>
 
-							<div class="filter-col2 p-r-15 p-b-27">
-								<div class="mtext-102 cl2 p-b-15">
-									Price
-								</div>
-
-								<ul>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-											All
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											$0.00 - $50.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											$50.00 - $100.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											$100.00 - $150.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											$150.00 - $200.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											$200.00+
-										</a>
-									</li>
-								</ul>
-							</div>
-
-							<div class="filter-col3 p-r-15 p-b-27">
-								<div class="mtext-102 cl2 p-b-15">
-									Color
-								</div>
-
-								<ul>
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #222;">
-											<i class="zmdi zmdi-circle"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04">
-											Black
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
-											<i class="zmdi zmdi-circle"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-											Blue
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-											<i class="zmdi zmdi-circle"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04">
-											Grey
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-											<i class="zmdi zmdi-circle"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04">
-											Green
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-											<i class="zmdi zmdi-circle"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04">
-											Red
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-											<i class="zmdi zmdi-circle-o"></i>
-										</span>
-
-										<a href="#" class="filter-link stext-106 trans-04">
-											White
-										</a>
-									</li>
-								</ul>
-							</div>
-
-							<div class="filter-col4 p-b-27">
-								<div class="mtext-102 cl2 p-b-15">
-									Tags
-								</div>
-
-								<div class="flex-w p-t-4 m-r--5">
-									<a href="#"
-										class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Fashion
-									</a>
-
-									<a href="#"
-										class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Lifestyle
-									</a>
-
-									<a href="#"
-										class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Denim
-									</a>
-
-									<a href="#"
-										class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Streetstyle
-									</a>
-
-									<a href="#"
-										class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Crafts
-									</a>
-								</div>
-							</div>
 						</div>
+
 					</div>
-				</div>
-
-				<div class="row isotope-grid">
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-01.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Esprit Ruffle Shirt
-									</a>
-
-									<span class="stext-105 cl3">
-										$16.64
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-02.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Herschel supply
-									</a>
-
-									<span class="stext-105 cl3">
-										$35.31
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-03.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Only Check Trouser
-									</a>
-
-									<span class="stext-105 cl3">
-										$25.50
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-04.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Classic Trench Coat
-									</a>
-
-									<span class="stext-105 cl3">
-										$75.00
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-05.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Front Pocket Jumper
-									</a>
-
-									<span class="stext-105 cl3">
-										$34.75
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-06.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Vintage Inspired Classic
-									</a>
-
-									<span class="stext-105 cl3">
-										$93.20
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-07.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Shirt in Stretch Cotton
-									</a>
-
-									<span class="stext-105 cl3">
-										$52.66
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-08.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Pieces Metallic Printed
-									</a>
-
-									<span class="stext-105 cl3">
-										$18.96
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item shoes">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-09.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Converse All Star Hi Plimsolls
-									</a>
-
-									<span class="stext-105 cl3">
-										$75.00
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-10.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Femme T-Shirt In Stripe
-									</a>
-
-									<span class="stext-105 cl3">
-										$25.85
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-11.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Herschel supply
-									</a>
-
-									<span class="stext-105 cl3">
-										$63.16
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-12.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Herschel supply
-									</a>
-
-									<span class="stext-105 cl3">
-										$63.15
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-13.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										T-Shirt with Sleeve
-									</a>
-
-									<span class="stext-105 cl3">
-										$18.49
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-14.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Pretty Little Thing
-									</a>
-
-									<span class="stext-105 cl3">
-										$54.79
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-15.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Mini Silver Mesh Watch
-									</a>
-
-									<span class="stext-105 cl3">
-										$86.85
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-pic hov-img0">
-								<img src="/assets/images/product-16.jpg" alt="IMG-PRODUCT">
-
-								<a href="#"
-									class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
-								</a>
-							</div>
-
-							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html"
-										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										Square Neck Back
-									</a>
-
-									<span class="stext-105 cl3">
-										$29.64
-									</span>
-								</div>
-
-								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04"
-											src="/assets/images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="/assets/images/icons/icon-heart-02.png" alt="ICON">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Load more -->
-				<div class="flex-c-m flex-w w-full p-t-45">
-					<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-						Load More
-					</a>
 				</div>
 			</div>
 		</div>

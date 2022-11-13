@@ -2,7 +2,7 @@
     <div class="card-header bg-primary">
         <h5 class="text-light fw-bold">LIST OF PRODUCTS</h5>
     </div>
-    <nav class="navbar navbar-light bg-light my-5">
+    <nav class="navbar navbar-light bg-light my-3">
         <div class="container">
             <input ng-model="searchName" type="text" class="form-control" id="keyword" placeholder="Enter keyword...">
         </div>
@@ -12,12 +12,12 @@
             <thead class="bg-success" style="font-variant: small-caps;">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Brand</th>
-                    <th>Image</th>
-                    <th>Category</th>
-                    <th>Available?</th>
+                    <th>Tên sản phảm</th>
+                    <th>Giá</th>
+                    <th>Hình ảnh</th>
+                    <th>Danh mục</th>
+                    <th>Thương hiệu</th>
+                    <th>Có sẵn?</th>
                     <th></th>
                 </tr>
             </thead>
@@ -25,54 +25,36 @@
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.price | number:0}} VNĐ</td>
-                <!-- <td>{{item.createDate | date: 'dd-MM-yyyy'}}</td> -->
-                <td>{{item.brand.name}}</td>
                 <td>
-                    <img ng-if="item.mainImage != null" ng-src="/assets/images/products/{{item.mainImage}}" style="width: 100px;">
+                    <img ng-if="item.mainImage != null" ng-src="/assets/images/{{item.mainImage}}" style="width: 100px;">
                     <img ng-if="item.mainImage == null" ng-src="/assets/images/default.png" style="width: 100px;">
                 </td>
                 <td>{{item.category.name}}</td>
-                <td>{{item.available? 'Yes':'No'}}</td>
+                <td>{{item.brand.name}}</td>
+                <td class="text-center">{{item.inventory > 1 ? '&#10003;':'Hết'}}</td>
                 <td>
-                    <div class="btn-group btn-group-xs">
-                        <button ng-click="edit(item)" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button ng-click="delete(item)" class="btn btn-danger glyphicon-trash"><i class="fa-solid fa-trash-can text-dark"></i></button>
+                    <div class="btn-group-xs">
+                        <button ng-click="edit(item)" class="btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button ng-click="delete(item)" class="btn"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </td>
             </tbody>
         </table>
     </div>
     <div class="card-footer text-center">
-        <button ng-click="first();" class="btn btn-warning">
-            <i class="fa-solid fa-backward-step"></i>
+        <button ng-click="first();" class="btn">
             Trang đầu
         </button>
-        <button ng-click="prev();" class="btn btn-info">
-            <i class="fa-solid fa-backward"></i>
-            Trang trước
+        <button ng-click="prev();" class="btn">
+            <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <button class="btn btn-success">{{pageIndex + 1}} of {{count()}}</button>
-        <button ng-click="next();" class="btn btn-info">
-            <i class="fa-solid fa-forward"></i>
-            Trang kế
+        <button class="btn">{{pageIndex + 1}} / {{count()}}</button>
+        <button ng-click="next();" class="btn">
+            <i class="fa-solid fa-chevron-right"></i>
         </button>
-        <button ng-click="last();" class="btn btn-warning">
-            <i class="fa-solid fa-forward-step"></i>
+        <button ng-click="last();" class="btn">
             Trang cuối
         </button>
-        <!-- <button ng-click="pager.first()" class="btn btn-danger">
-            <<
-        </button>
-        <button ng-click="pager.prev()" class="btn btn-danger">
-            <
-        </button>
-        <button class="btn btn-success">{{pager.page + 1}} of {{pager.count}}</button>
-        <button ng-click="pager.next()" class="btn btn-danger">
-            >
-        </button>
-        <button ng-click="pager.last()" class="btn btn-danger">
-            >>
-        </button> -->
     </div>
     <script src="/assets/admin/product/dirPagination.js"></script>
 </div>

@@ -11,4 +11,6 @@ public interface AddressService {
 
 	List<District> getAllDistrictByProvinceCity(Integer id);
 
+	ProvinceCity getOneProvinceCity(Integer id);
+
 }

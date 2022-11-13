@@ -1,0 +1,51 @@
+<div class="col-sm-12 form_product">
+    <div class="form-group col-12 d-flex">
+        <div class="col-6">
+            <label for="brand" class="form-label">Đơn vị</label>
+            <input ng-model="form.unitProduct.id" class="form-control" list="listUnitProducts" id="brand"
+                placeholder="Chọn thương hiệu">
+            <datalist id="listUnitProducts">
+                <option ng-repeat="unit in listUnitProducts" value="{{unit.id}}">{{unit.name}}</option>
+            </datalist>
+        </div>
+        <div class="col-6">
+            <label for="category" class="form-label">Chất liệu</label>
+            <input ng-model="form.material.id" class="form-control" list="listMaterials" id="category"
+                placeholder="Chọn danh mục">
+            <datalist id="listMaterials">
+                <option ng-repeat="material in listMaterials" value="{{material.id}}">{{material.name}}</option>
+            </datalist>
+        </div>
+    </div>
+    <div class="form-group col-12 d-flex">
+        <div class="col-6">
+            <label>Ngày sản xuất</label>
+            <input type="date" ng-model="form.dayOfManufacture" class="form-control">
+        </div>
+        <div class="col-6">
+            <label>Ngày tạo sản phẩm</label>
+            <input ng-model="form.createDate" class="form-control">
+        </div>
+    </div>
+    <div class="form-group col-12 d-flex">
+        <div class="col-6">
+            <label>Chiều dài</label>
+            <input type="number" min="0" ng-model="form.length" class="form-control">
+        </div>
+        <div class="col-6">
+            <label>Chiều rộng</label>
+            <input type="number" min="0" ng-model="form.width" class="form-control">
+        </div>
+    </div>
+    <div class="form-group col-12 d-flex">
+        <div class="col-6">
+            <label>Chiều cao</label>
+            <input type="number" min="0" ng-model="form.height" class="form-control">
+        </div>
+        <div class="col-6">
+            <label>Cân nặng</label>
+            <input type="number" min="0" ng-model="form.weight" class="form-control">
+        </div>
+    </div>
+    
+</div>

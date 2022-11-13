@@ -178,7 +178,8 @@ list-type-ulli,
 
 .main-login input,
 .main-login select,
-.main-login textarea {
+.main-login textarea,
+.main-login .form-div {
   outline: none;
   appearance: unset !important;
   -moz-appearance: unset !important;
@@ -188,6 +189,7 @@ list-type-ulli,
 }
 
 .main-login input::-webkit-outer-spin-button,
+.main-login .form-div::-webkit-outer-spin-button,
 .main-login input::-webkit-inner-spin-button {
   appearance: none !important;
   -moz-appearance: none !important;
@@ -422,7 +424,8 @@ body {
   margin-bottom: 0px;
 }
 
-.main-login input {
+.main-login input,
+.main-login .form-div {
   background-color: transparent;
   width: 100%;
   display: block;

@@ -11,8 +11,16 @@ public interface AccountService {
 
 	Account getById(String username);
 
-	void save(Account account);
+	Account save(Account account);
 
 	Account convertToEntity(AccountRegistrationDTO userRegistrationDTO);
+
+	Account create(Account account);
+
+	Account update(Account account);
+
+	void delete(String username);
+
+	List<Account> getAdministrators();
 	
 }

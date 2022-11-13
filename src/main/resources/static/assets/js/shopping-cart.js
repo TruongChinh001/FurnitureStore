@@ -95,12 +95,13 @@ app.controller('shopping-cart-ctrl', function ($scope, $http) {
 		}
 	}
 
+
+
 	$scope.cartfurniture.loadFromLocalStorage();
 	$scope.order = {
 		createDate: new Date(),
 		addressLine1:"",
 		provinceCity:"",
-		// provinceCity:{id:$('#provinceCity option:selected').text()},
 		district:"",
 		wardVillage:"",
 		hamlet:"",
@@ -116,12 +117,28 @@ app.controller('shopping-cart-ctrl', function ($scope, $http) {
 			});
 		},
 		purchase(){
+			var valueCity = $('#city option:selected').text();
+			var valueDistrict = $('#district option:selected').text();
+			var valueWard = $('#ward option:selected').text();
+			if(valueCity === "Chọn tỉnh thành"){
+				valueCity = ""
+			}
+			if(valueDistrict === "Chọn quận huyện"){
+				valueDistrict = ""
+			}
+			if(valueWard === "Chọn phường xã"){
+				valueWard = ""
+			}
+			console.log(valueCity);
+			$scope.order.provinceCity=valueCity;
+			$scope.order.district=valueDistrict;
+			$scope.order.wardVillage=valueWard;
 			var order = angular.copy(this);
 			$http.post('/rest/orders', order).then(resp => {
 				alert('Đặt hàng thành công!');
 				$scope.cartfurniture.clear();
 				console.log(resp.data);
-				location.href = '/order/detail/' + resp.data.id;
+				location.href = "/order/detail/" + resp.data.id;
 			}).catch(error => {
 				alert('Lỗi');
 				console.log(error);

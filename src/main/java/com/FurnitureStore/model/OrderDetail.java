@@ -31,10 +31,6 @@ public class OrderDetail {
 	private Float price;
 	
 	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account account;
-	
-	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
