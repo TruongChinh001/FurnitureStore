@@ -55,6 +55,9 @@ public class Account {
 	@Column(name = "verification_code", length = 64)
 	private String verificationCode;
 	
+	@Column(name = "reset_password_code", length = 64)
+	private String resetPasswordCode;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<Address> addresses;

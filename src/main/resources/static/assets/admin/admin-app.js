@@ -1,6 +1,5 @@
 var app = angular.module("admin-app", ["ngRoute", "textAngular"]);
 
-
 app.controller('remote-user', function($scope, $http){
     $scope.session = "";
 
@@ -13,8 +12,8 @@ app.controller('remote-user', function($scope, $http){
 app.config(function($routeProvider){
     $routeProvider
         .when("/admin", {
-            templateUrl: "/assets/admin/home.html",
-            // controller: "chart-ctrl"
+            templateUrl: "/assets/admin/home/index.html",
+            controller: "home-ctrl"
         })
         .when("/brand", {
             templateUrl: "/assets/admin/brand/index.html",

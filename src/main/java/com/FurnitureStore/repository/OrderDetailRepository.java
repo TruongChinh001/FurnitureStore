@@ -12,5 +12,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
 
 	@Query("SELECT SUM(od.price * od.quantity) FROM OrderDetail od WHERE od.order.id = ?1")
 	Float totalPrice(Integer id);
+	
 
 }

@@ -620,6 +620,12 @@ body {
   font-style: italic;
 }
 
+.main-login .success-messge{
+  color: green;
+  font-size: 1em;
+  font-style: italic;
+}
+
 .main-login .socials li {
   padding: 5px;
 }
